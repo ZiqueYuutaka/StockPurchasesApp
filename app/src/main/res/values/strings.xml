@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">StockPurchasesApp</string>
+
+    <string name="greetings">WELCOME TO THE STOCK PURCHASES APP</string>
+    <string name="instructions">To use this app you must enter in 25 stocks if they do not
+    already exist in the application. The stocks must have an eight digit alphanumeric id (AB123456),
+    a customer name, the name of the company whose shares the customer
+    is purchasing, the purchase price, the number of shares purchased, the date
+    the purchase was made, and the total worth of the stock.
+    NO FIELD CAN BE EMPTY. STOCK PRICES AND TOTAL WORTH MUST BE
+    POSITIVE VALUES.</string>
+
+    <string name="create">Create List</string>
+    <string name="view">View List</string>
+    <string name="quit">Quit</string>
+</resources>
