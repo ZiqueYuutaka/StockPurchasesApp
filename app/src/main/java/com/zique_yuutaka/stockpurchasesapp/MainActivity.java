@@ -1,5 +1,7 @@
 package com.zique_yuutaka.stockpurchasesapp;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import fragments.LandingFragment;
+import fragments.StockListFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static final String DEBUG = "***MAIN_ACTIVITY***";
@@ -56,9 +59,18 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case(R.id.create_list):
                 Log.d(DEBUG, "Creating the list");
+                Intent i = BuildListActivity.newIntent(MainActivity.this);
+                Log.d(DEBUG, "Starting new activity");
+                startActivity(i);
+                Log.d(DEBUG, "New activity started");
                 break;
             case(R.id.view_list):
                 Log.d(DEBUG, "Viewing the list");
+                //Fragment fragment = fm.findFragmentById(R.id.stock_list_fragment);
+                Fragment fragment = new StockListFragment();
+                fm.beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .commit();
                 break;
             case(R.id.quit):
                 Log.d(DEBUG, "Quitting the application");

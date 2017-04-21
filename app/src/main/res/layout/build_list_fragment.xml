@@ -2,6 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:id="@+id/build_list_fragment">
+
+    <EditText
+        android:id="@+id/et_customer_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="AB123456"/>
+
+    <EditText
+        android:id="@+id/et_customer_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="Customer Name"/>
+
+    <EditText
+        android:id="@+id/et_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="Company Name"/>
+
+    <EditText
+        android:id="@+id/et_purchased_shares"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="Amount Purchased"/>
+
+    <EditText
+        android:id="@+id/et_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="Purchase Price"/>
+
+    <TextView
+        android:id="@+id/et_purchase_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="Purchase Date Placeholder"/>
+
+    <TextView
+        android:id="@+id/et_total_stock_worth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:hint="Total Worth Placeholder"/>
 
 </LinearLayout>
