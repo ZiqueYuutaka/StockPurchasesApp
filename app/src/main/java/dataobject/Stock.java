@@ -4,19 +4,28 @@ package dataobject;
  * Created by Zique Yuutaka on 4/23/2017.
  */
 
-public class Stock {
+public class Stock implements Comparable<Stock>{
 
     private String customerId;
     private String customerName;
     private String companyNameOfShares;
     private int numSharesPurchased;
     private float sharePurchasePrice;
-    private String purchaseDate; //Could be a Date object
+    private String purchaseDate; // Could be a Date object
     private float totalStockWorth;
 
-    public Stock(String customerId, String customerName, String companyNameOfShares,
-                 int numSharesPurchased, float sharePurchasePrice, String purchaseDate,
-                 float totalStockWorth) {
+    public Stock() {
+        this.customerId = null;
+        this.customerName = null;
+        this.companyNameOfShares = null;
+        this.numSharesPurchased = 0;
+        this.sharePurchasePrice = 0.00f;
+        this.purchaseDate = null;
+        this.totalStockWorth = 0.00f;
+    }
+
+    public Stock(String customerId, String customerName, String companyNameOfShares, int numSharesPurchased,
+                 float sharePurchasePrice, String purchaseDate, float totalStockWorth) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.companyNameOfShares = companyNameOfShares;
@@ -83,14 +92,15 @@ public class Stock {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
 
-        return customerId + ";" +
-                customerName + ";" +
-                companyNameOfShares + ";" +
-                Integer.toString(numSharesPurchased) + ";" +
-                Float.toString(sharePurchasePrice) + ";" +
-                purchaseDate + ";" +
-                Float.toString(totalStockWorth) + "\n";
+        return customerId + ";" + customerName + ";" + companyNameOfShares + ";"
+                + Integer.toString(numSharesPurchased) + ";" + Float.toString(sharePurchasePrice) + ";"
+                + purchaseDate + ";" + Float.toString(totalStockWorth) + "\n";
+    }
+
+    @Override
+    public int compareTo(Stock stock) {
+        return this.customerId.compareTo(stock.customerId);
     }
 }
