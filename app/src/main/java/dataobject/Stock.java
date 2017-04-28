@@ -1,5 +1,7 @@
 package dataobject;
 
+import java.util.Date;
+
 /**
  * Created by Zique Yuutaka on 4/23/2017.
  */

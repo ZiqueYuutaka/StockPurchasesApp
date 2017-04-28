@@ -41,17 +41,31 @@
         android:hint="Purchase Price"/>
 
     <TextView
-        android:id="@+id/et_purchase_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:hint="Purchase Date Placeholder"/>
-
-    <TextView
         android:id="@+id/et_total_stock_worth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
+        android:textSize="20dp"
         android:hint="Total Worth Placeholder"/>
+
+    <Button
+        android:id="@+id/bt_purchase_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/date_of_purchase"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/bt_add"
+            android:text="@string/add"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

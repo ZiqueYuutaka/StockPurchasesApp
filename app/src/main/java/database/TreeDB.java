@@ -13,7 +13,7 @@ import dataobject.Stock;
 
 public class TreeDB {
 
-    private StockNode rootStock;
+    private static StockNode rootStock;
     private int size;
 
     private class StockNode {
@@ -33,10 +33,15 @@ public class TreeDB {
     }
 
     // return a list in order
-    public ArrayList<Stock> getInOrderList() {
-        ArrayList<Stock> list = new ArrayList<>();
+    public List<Stock> getInOrderList() {
+        List<Stock> list = new ArrayList<>();
 
-        buildListInOrder(rootStock, list);
+//        buildListInOrder(rootStock, list);
+        for(int i = 0; i < 25;i++){
+            Stock stock = new Stock();
+            stock.setCustomerId(Integer.toString(i));
+            list.add(stock);
+        }
 
         return list;
     }

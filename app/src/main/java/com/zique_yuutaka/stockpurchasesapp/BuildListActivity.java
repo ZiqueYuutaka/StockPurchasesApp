@@ -37,6 +37,13 @@ public class BuildListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onDestroy(){
+        //Save to file
+
+        //build tree
+    }
+
     public static Intent newIntent(Context packageContext){
         Intent i = new Intent(packageContext, BuildListActivity.class);
         return i;

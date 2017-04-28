@@ -15,6 +15,9 @@ import com.zique_yuutaka.stockpurchasesapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.TreeDB;
+import dataobject.Stock;
+
 /**
  * Created by Zique Yuutaka on 4/18/2017.
  */
@@ -57,9 +60,9 @@ public class StockListFragment extends Fragment {
     }
 
     private class StockAdapter extends RecyclerView.Adapter<StockHolder>{
-        private List<String> mList;
+        private List<Stock> mList;
 
-        public StockAdapter(List<String> list){
+        public StockAdapter(List<Stock> list){
 
             mList = list;
         }
@@ -74,9 +77,9 @@ public class StockListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(StockHolder holder, int position){
-            String temp = mList.get(position);
+            Stock temp = mList.get(position);
 //            holder.bindWord(word);
-            holder.mTitleTextView.setText(temp);
+            holder.mTitleTextView.setText(temp.getCustomerId());
         }
 
         @Override
@@ -88,11 +91,9 @@ public class StockListFragment extends Fragment {
     private void setUI(){
         ArrayList<String> tempList = new ArrayList<>();
 
-        for(int i = 0; i < 25;i++){
-            tempList.add("Hello " + i);
-        }
+        TreeDB myTree = new TreeDB();
 
-        mStockAdapter = new StockAdapter(tempList);
+        mStockAdapter = new StockAdapter(myTree.getInOrderList());
         stockRecycler.setAdapter(mStockAdapter);
     }
 }
