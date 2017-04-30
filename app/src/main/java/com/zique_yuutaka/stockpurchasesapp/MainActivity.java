@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import dao.StockDAO;
 import fragments.LandingFragment;
 import fragments.StockListFragment;
 
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
+
+        //see if database already exists
+        StockDAO.mContext = getApplicationContext();
 
     }
 

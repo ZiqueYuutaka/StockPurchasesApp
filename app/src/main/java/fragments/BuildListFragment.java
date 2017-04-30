@@ -22,10 +22,13 @@ import android.widget.Toast;
 
 import com.zique_yuutaka.stockpurchasesapp.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dao.StockDAO;
+import database.TreeDB;
 import dataobject.Stock;
 
 /**
@@ -38,6 +41,9 @@ public class BuildListFragment extends Fragment {
     private static final String DIALOG_DATE = "DialogDate";
 
     private static final int REQUEST_DATE = 0;
+
+    private final byte TOTAL_STOCKS = 1;
+    private byte stocksAdded = 0;
 
     private Stock stock;
     private Button btAdd;
@@ -68,14 +74,14 @@ public class BuildListFragment extends Fragment {
 
         stock = null;
 
-        customerId = (EditText)v.findViewById(R.id.et_customer_name);
+        customerId = (EditText)v.findViewById(R.id.et_customer_id);
         customerName=(EditText)v.findViewById(R.id.et_customer_name);
-        companyName=(EditText)v.findViewById(R.id.et_customer_name);
-        amountPurchased=(EditText)v.findViewById(R.id.et_customer_name);
+        companyName=(EditText)v.findViewById(R.id.et_company);
+        amountPurchased=(EditText)v.findViewById(R.id.et_purchased_shares);
 
-        purchasePrice=(EditText)v.findViewById(R.id.et_customer_name);
+        purchasePrice=(EditText)v.findViewById(R.id.et_price);
 
-        totalWorth=(TextView) v.findViewById(R.id.et_customer_name);
+        totalWorth=(TextView) v.findViewById(R.id.et_total_stock_worth);
 
         btAdd=(Button) v.findViewById(R.id.bt_add);
         btAdd.setOnClickListener(new View.OnClickListener(){
@@ -91,26 +97,26 @@ public class BuildListFragment extends Fragment {
                     stock.setNumSharesPurchased(Integer.parseInt(amountPurchased.getText().toString()));
                     stock.setSharePurchasePrice(Float.parseFloat(purchasePrice.getText().toString()));
                     stock.setPurchaseDate(btDate.getText().toString());
-
-                    Log.d(DEBUG, "customerId: " + customerId.getText().toString());
-                    Log.d(DEBUG, "customerName: " + customerName.getText().toString());
-                    Log.d(DEBUG, "companyName: " + companyName.getText().toString());
-                    Log.d(DEBUG, "numSharesPurchased: " + amountPurchased.getText().toString());
-                    Log.d(DEBUG, "purchasePrice: " + purchasePrice.getText().toString());
-                    Log.d(DEBUG, "purchaseDate: " + btDate.getText().toString());
+                    stock.setTotalStockWorth((float)stock.getNumSharesPurchased() * stock.getSharePurchasePrice());
 
                     if(stock.getCustomerId().equals("")){
-                        Toast.makeText(getContext(), "Please Enter information", Toast.LENGTH_SHORT).show();
+                        showToast("Please Enter information");
                         stock = null;
                     }else{
                         Log.d(DEBUG, "adding stock to list...");
-                        mStockList.add(stock);
-                        clearFields();
+                        if(stocksAdded == TOTAL_STOCKS){
+                            showToast("Cannot add more stocks");
+                            clearFields();
+                        }else {
+                            mStockList.add(stock);
+                            clearFields();
+                            stocksAdded++;
+                        }
                     }
 
                 }catch(NumberFormatException ex){
                     ex.printStackTrace();
-                    Toast.makeText(getContext(), "Please Enter valid numerical information", Toast.LENGTH_SHORT).show();
+                    showToast("Please Enter valid numerical information");
                     amountPurchased.setText("");
                     purchasePrice.setText("");
                 }
@@ -139,7 +145,7 @@ public class BuildListFragment extends Fragment {
 
         if(requestCode == REQUEST_DATE){
             String date = (String) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            btDate.setText(stock.getPurchaseDate().toString());//aka updateDate()
+            btDate.setText(date);
         }
     }//End onActivityResult
 
@@ -148,17 +154,28 @@ public class BuildListFragment extends Fragment {
         customerName.setText("");
         companyName.setText("");
         amountPurchased.setText("");
-
         purchasePrice.setText("");
         btDate.setText(R.string.date_of_purchase);
+    }
+
+    private void showToast(String msg){
+        Toast.makeText(getContext(), msg , Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDetach(){
         Log.d(DEBUG, "BuildListFragment onDetach()...");
         //build tree
+        TreeDB myTreeDB = new TreeDB();
+        myTreeDB.buildTree(mStockList);
 
         //save file
+        try{
+
+            StockDAO.writeStocks(mStockList);
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
 
         super.onDetach();
     }

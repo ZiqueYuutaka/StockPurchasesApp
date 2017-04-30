@@ -13,8 +13,10 @@ import dataobject.Stock;
 
 public class TreeDB {
 
-    private static StockNode rootStock;
-    private int size;
+    private static final String DEBUG = "TREE_DB";
+
+    private static StockNode rootStock = null;
+    private static int size = 0;
 
     private class StockNode {
         public Stock stock;
@@ -28,27 +30,21 @@ public class TreeDB {
     }
 
     public TreeDB() {
-        this.rootStock = null;
-        this.size = 0;
+
     }
 
     // return a list in order
     public List<Stock> getInOrderList() {
-        List<Stock> list = new ArrayList<>();
+        ArrayList<Stock> list = new ArrayList<>();
 
-//        buildListInOrder(rootStock, list);
-        for(int i = 0; i < 25;i++){
-            Stock stock = new Stock();
-            stock.setCustomerId(Integer.toString(i));
-            list.add(stock);
-        }
+        buildListInOrder(rootStock, list);
 
         return list;
     }
 
     public void printInOrder(){
         if(rootStock == null){
-            System.out.println("Empty tree");
+            Log.d(DEBUG, "Empty tree");
         }else{
             printTraverse(rootStock);
         }
@@ -60,7 +56,7 @@ public class TreeDB {
             return;
         }else{
             printTraverse(node.left);
-            System.out.println(node.stock.getCustomerId());
+            Log.d(DEBUG, node.stock.getCustomerId());
             printTraverse(node.right);
         }
     }
@@ -79,7 +75,7 @@ public class TreeDB {
 
     public void buildTree(List<Stock> list) {
         for (Stock stock : list) {
-            System.out.println("Inserting " + stock.getCustomerId());
+            Log.d(DEBUG, "Inserting " + stock.getCustomerId());
             insert(stock);
         }
     }
