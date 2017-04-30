@@ -1,5 +1,6 @@
 package fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zique_yuutaka.stockpurchasesapp.R;
+import com.zique_yuutaka.stockpurchasesapp.StockViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +45,33 @@ public class StockListFragment extends Fragment {
         return v;
     }
 
-    private class StockHolder extends RecyclerView.ViewHolder{
+    private class StockHolder extends RecyclerView.ViewHolder implements
+        View.OnClickListener{
         public TextView mTitleTextView;
 
+        //hold on to stock here to pass on click
+        public Stock stockHolderStock;
 
         public StockHolder(View itemView){
             super(itemView);
 
            mTitleTextView = (TextView) itemView;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v){
+            Log.d(DEBUG,mTitleTextView.getText().toString() +" was clicked");
+
+            //set StockViewFragment with the holder's stock
+            StockViewFragment.setStock(stockHolderStock);
+
+            //I could also just search the tree
+
+            //launch StockViewActivity
+            Intent i = StockViewActivity.newIntent(getContext());
+            startActivity(i);
         }
 
         //Set text of views
@@ -80,6 +101,7 @@ public class StockListFragment extends Fragment {
             Stock temp = mList.get(position);
 //            holder.bindWord(word);
             holder.mTitleTextView.setText(temp.getCustomerId());
+            holder.stockHolderStock = temp;
         }
 
         @Override

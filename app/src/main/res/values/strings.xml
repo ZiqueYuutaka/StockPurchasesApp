@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">StockPurchasesApp</string>
+    <string name="build">Build List</string>
+    <string name="view_stock">View Single Stock</string>
 
     <string name="greetings">WELCOME TO THE STOCK PURCHASES APP</string>
     <string name="instructions">To use this app you must enter in 25 stocks if they do not
