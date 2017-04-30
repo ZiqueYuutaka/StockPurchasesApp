@@ -17,12 +17,12 @@ public class Stock implements Comparable<Stock>{
     private float totalStockWorth;
 
     public Stock() {
-        this.customerId = null;
-        this.customerName = null;
-        this.companyNameOfShares = null;
+        this.customerId = "";
+        this.customerName = "";
+        this.companyNameOfShares = "";
         this.numSharesPurchased = 0;
         this.sharePurchasePrice = 0.00f;
-        this.purchaseDate = null;
+        this.purchaseDate = "";
         this.totalStockWorth = 0.00f;
     }
 
