@@ -12,6 +12,8 @@ import com.zique_yuutaka.stockpurchasesapp.R;
 
 import org.w3c.dom.Text;
 
+import java.text.NumberFormat;
+
 import dataobject.Stock;
 
 /**
@@ -61,12 +63,19 @@ public class StockViewFragment extends Fragment {
         amountPurchased.setText(Integer.toString(stock.getNumSharesPurchased()));
 
         purchasePrice = (TextView) view.findViewById(R.id.tv_price);
-        purchasePrice.setText(Float.toString(stock.getSharePurchasePrice()));
+        String price = currencyFormat(stock.getSharePurchasePrice());
+        purchasePrice.setText(price);
 
         purchaseDate = (TextView) view.findViewById(R.id.tv_date);
         purchaseDate.setText(stock.getPurchaseDate());
 
         totalWorth = (TextView) view.findViewById(R.id.tv_total_stock_worth);
-        totalWorth.setText(Float.toString(stock.getTotalStockWorth()));
+        String total = currencyFormat(stock.getTotalStockWorth());
+        totalWorth.setText(total);
+    }
+
+    private String currencyFormat(float money){
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        return currency.format(money);
     }
 }

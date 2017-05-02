@@ -42,7 +42,7 @@ public class BuildListFragment extends Fragment {
 
     private static final int REQUEST_DATE = 0;
 
-    private final byte TOTAL_STOCKS = 1;
+    private final byte TOTAL_STOCKS = 25;
     private byte stocksAdded = 0;
 
     private Stock stock;

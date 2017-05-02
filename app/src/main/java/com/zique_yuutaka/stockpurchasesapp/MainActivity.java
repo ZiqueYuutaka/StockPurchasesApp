@@ -15,13 +15,22 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import dao.StockDAO;
+import database.TreeDB;
+import dataobject.Stock;
 import fragments.LandingFragment;
 import fragments.StockListFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static final String DEBUG = "***MAIN_ACTIVITY***";
     private static FragmentManager fm;
+    private boolean dbExists;
+
+    TreeDB tree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +52,67 @@ public class MainActivity extends AppCompatActivity {
 
         //see if database already exists
         StockDAO.mContext = getApplicationContext();
+        dbExists = StockDAO.dbExists();
+        if(dbExists){
+            try{
+                List<Stock> list = StockDAO.readStocks();
+                tree = new TreeDB();
+                tree.buildTree(list);
+                Log.d(DEBUG, "size: " + tree.size);
+            }catch(IOException ex){
+                Log.d(DEBUG, "ERROR READING FILE...");
+            }
+        }else{
+            Log.d(DEBUG, "File does not exist");
+        }
 
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d(DEBUG , "MainActivity.onPause()");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(DEBUG, "MainActivity.onResume()");
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.d(DEBUG, "onStop()");
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.d(DEBUG, "onDestroy()");
+        //Erase tree
+        tree.rootStock = null;
+        tree.size = 0;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if(dbExists){
+            Log.d(DEBUG, "tree size greater than zero");
+            menu.getItem(0).setEnabled(false);
+            menu.getItem(1).setEnabled(true);
+        }else {
+            menu.getItem(0).setEnabled(true);
+            menu.getItem(1).setEnabled(false);
+        }
         return true;
     }
 

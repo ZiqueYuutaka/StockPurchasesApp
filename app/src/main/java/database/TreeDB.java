@@ -15,8 +15,9 @@ public class TreeDB {
 
     private static final String DEBUG = "TREE_DB";
 
-    private static StockNode rootStock = null;
-    private static int size = 0;
+    //made public to remove during onDestroy Method
+    public static StockNode rootStock = null;
+    public static int size = 0;
 
     private class StockNode {
         public Stock stock;
@@ -104,6 +105,7 @@ public class TreeDB {
                 }else{
                     //No duplicates allowed
                     Log.d("DEBUG","No duplicates allowed");
+                    break;
                 }
             }
 
@@ -119,13 +121,5 @@ public class TreeDB {
                 size++;
             }
         }
-    }
-
-    public StockNode getRoot() {
-        return this.rootStock;
-    }
-
-    public int getSize() {
-        return this.size;
     }
 }
