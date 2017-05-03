@@ -28,7 +28,9 @@ import fragments.StockListFragment;
 public class MainActivity extends AppCompatActivity {
     private static final String DEBUG = "***MAIN_ACTIVITY***";
     private static FragmentManager fm;
-    private boolean dbExists;
+    public static boolean dbExists;
+
+    private Menu myMenu;
 
     TreeDB tree;
 
@@ -77,8 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onResume(){
-        super.onResume();
+        if(myMenu != null){
+            if(dbExists){
+                myMenu.getItem(0).setEnabled(false);
+                myMenu.getItem(1).setEnabled(true);
+            }else {
+                myMenu.getItem(0).setEnabled(true);
+                myMenu.getItem(1).setEnabled(false);
+            }
+        }
         Log.d(DEBUG, "MainActivity.onResume()");
+        super.onResume();
     }
 
     @Override
@@ -99,19 +110,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        myMenu = menu;
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
+        myMenu = menu;
         if(dbExists){
-            Log.d(DEBUG, "tree size greater than zero");
-            menu.getItem(0).setEnabled(false);
-            menu.getItem(1).setEnabled(true);
+            myMenu.getItem(0).setEnabled(false);
+            myMenu.getItem(1).setEnabled(true);
         }else {
-            menu.getItem(0).setEnabled(true);
-            menu.getItem(1).setEnabled(false);
+            myMenu.getItem(0).setEnabled(true);
+            myMenu.getItem(1).setEnabled(false);
         }
         return true;
     }
@@ -138,9 +151,6 @@ public class MainActivity extends AppCompatActivity {
                 fm.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit();
-                break;
-            case(R.id.quit):
-                Log.d(DEBUG, "Quitting the application");
                 break;
         }
 
